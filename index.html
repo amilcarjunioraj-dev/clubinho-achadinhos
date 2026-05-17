@@ -17,7 +17,6 @@
     --gold: #ffd166;
     --text: #f0f0f8;
     --muted: #7070a0;
-    --glow: rgba(255,107,43,0.15);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,7 +29,6 @@
     overflow-x: hidden;
   }
 
-  /* BG texture */
   body::before {
     content: '';
     position: fixed;
@@ -42,12 +40,11 @@
     z-index: 0;
   }
 
-  /* HEADER */
   header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(10,10,15,0.85);
+    background: rgba(10,10,15,0.90);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 0 2rem;
@@ -71,8 +68,6 @@
 
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
-  .header-right { display: flex; align-items: center; gap: 1rem; }
-
   .badge-live {
     background: rgba(0,212,170,0.15);
     border: 1px solid rgba(0,212,170,0.4);
@@ -85,23 +80,22 @@
     text-transform: uppercase;
   }
 
-  /* TABS */
   .tabs {
     display: flex;
-    gap: 0;
     padding: 1.5rem 2rem 0;
     position: relative;
     z-index: 1;
     overflow-x: auto;
+    gap: 0;
   }
 
   .tab {
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
     font-family: 'Syne', sans-serif;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--muted);
     border: 1px solid transparent;
     border-bottom: none;
@@ -119,9 +113,6 @@
 
   .tab:hover:not(.active) { color: var(--text); }
 
-  .tab .tab-icon { margin-right: 6px; }
-
-  /* MAIN */
   main {
     padding: 0 2rem 2rem;
     position: relative;
@@ -143,208 +134,208 @@
 
   @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-  /* SECTION TITLE */
   .section-title {
     font-family: 'Syne', sans-serif;
     font-weight: 700;
-    font-size: 1.4rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
   }
 
   .section-sub {
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     margin-bottom: 1.5rem;
   }
 
-  /* FILTERS */
-  .filters {
+  /* BUSCA GERAL */
+  .search-bar {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    gap: 10px;
+    margin-bottom: 2rem;
   }
 
-  .filter-btn {
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
-  }
-
-  .filter-btn.active, .filter-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(255,107,43,0.08);
-  }
-
-  /* GRID */
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-  }
-
-  /* PRODUCT CARD */
-  .product-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.25s;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .product-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(255,107,43,0.15);
-  }
-
-  .product-card .card-img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    background: var(--card);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-  }
-
-  .product-card .card-body { padding: 12px; }
-
-  .product-card .card-name {
-    font-size: 0.82rem;
-    font-weight: 500;
-    line-height: 1.4;
-    margin-bottom: 8px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .product-card .card-price {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--accent3);
-  }
-
-  .product-card .card-old {
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-decoration: line-through;
-    margin-right: 6px;
-  }
-
-  .product-card .card-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .btn-usar {
+  .search-input {
     flex: 1;
-    padding: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { outline: none; border-color: var(--accent); }
+
+  .btn-search {
+    padding: 12px 24px;
     background: var(--accent);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: opacity 0.2s;
-  }
-
-  .btn-usar:hover { opacity: 0.85; }
-
-  /* BADGES */
-  .badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .badge-hot { background: var(--accent2); color: white; }
-  .badge-trend { background: var(--accent3); color: #0a0a0f; }
-  .badge-off { background: var(--gold); color: #0a0a0f; }
-
-  /* RANKING TABLE */
-  .ranking-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .ranking-table th {
-    text-align: left;
-    padding: 10px 14px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
+    border-radius: 10px;
     font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
   }
 
-  .ranking-table td {
+  .btn-search:hover { opacity: 0.85; }
+
+  /* LOJAS GRID */
+  .lojas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .loja-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .loja-btn:hover {
+    border-color: var(--accent);
+    background: rgba(255,107,43,0.07);
+    transform: translateY(-2px);
+  }
+
+  .loja-btn .loja-icon { font-size: 2rem; }
+  .loja-btn .loja-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; }
+  .loja-btn .loja-sub { font-size: 0.72rem; color: var(--muted); text-align: center; }
+
+  /* CATEGORIAS */
+  .cat-section { margin-bottom: 2rem; }
+
+  .cat-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
     font-size: 0.85rem;
-    border-bottom: 1px solid rgba(42,42,58,0.5);
-    vertical-align: middle;
   }
 
-  .ranking-table tr:hover td { background: rgba(255,107,43,0.04); }
+  .cat-btn:hover {
+    border-color: var(--accent);
+    background: rgba(255,107,43,0.07);
+    transform: translateX(3px);
+  }
 
-  .rank-num {
+  .cat-btn .cat-emoji { font-size: 1.2rem; }
+
+  .cat-btn .cat-info { display: flex; flex-direction: column; }
+  .cat-btn .cat-name { font-weight: 600; font-size: 0.83rem; }
+  .cat-btn .cat-loja { font-size: 0.72rem; color: var(--muted); }
+
+  .cat-btn .arrow { margin-left: auto; color: var(--muted); font-size: 0.8rem; }
+
+  /* TRENDS */
+  .trends-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .trend-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .trend-card:hover {
+    border-color: var(--accent3);
+    background: rgba(0,212,170,0.05);
+  }
+
+  .trend-rank {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: var(--muted);
-    width: 40px;
+    width: 30px;
+    text-align: center;
+    flex-shrink: 0;
   }
 
-  .rank-num.top3 { color: var(--gold); }
+  .trend-rank.top { color: var(--gold); }
 
-  .trend-bar {
-    width: 100px;
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-  }
+  .trend-info { flex: 1; }
+  .trend-name { font-weight: 500; font-size: 0.85rem; margin-bottom: 3px; }
+  .trend-meta { font-size: 0.72rem; color: var(--muted); }
 
-  .trend-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent3), var(--accent));
-    border-radius: 3px;
-    transition: width 1s ease;
-  }
-
-  .trend-indicator {
-    font-size: 0.75rem;
-    font-weight: 600;
+  .trend-badge {
+    font-size: 0.7rem;
     padding: 2px 8px;
     border-radius: 4px;
+    font-weight: 700;
+    flex-shrink: 0;
   }
 
-  .trend-up { background: rgba(0,212,170,0.15); color: var(--accent3); }
-  .trend-fire { background: rgba(255,61,127,0.15); color: var(--accent2); }
-  .trend-stable { background: rgba(112,112,160,0.15); color: var(--muted); }
+  .tb-fire { background: rgba(255,61,127,0.15); color: var(--accent2); }
+  .tb-up { background: rgba(0,212,170,0.15); color: var(--accent3); }
+  .tb-stable { background: rgba(112,112,160,0.15); color: var(--muted); }
+
+  /* ALERT */
+  .alert-post {
+    background: linear-gradient(135deg, rgba(255,107,43,0.12), rgba(255,61,127,0.08));
+    border: 1px solid rgba(255,107,43,0.35);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+  }
+
+  .alert-post strong { color: var(--accent); font-family: 'Syne', sans-serif; }
 
   /* GERADOR */
   .gerador-container {
@@ -360,7 +351,7 @@
   .form-group { display: flex; flex-direction: column; gap: 6px; }
 
   .form-group label {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--muted);
     font-weight: 500;
     text-transform: uppercase;
@@ -386,7 +377,6 @@
 
   .form-textarea { resize: vertical; min-height: 80px; }
   .form-select { cursor: pointer; }
-
   option { background: var(--card); }
 
   .style-grid {
@@ -423,11 +413,9 @@
     font-size: 1rem;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.1s;
-    letter-spacing: 0.5px;
   }
 
   .btn-gerar:hover { opacity: 0.9; transform: translateY(-1px); }
-  .btn-gerar:active { transform: translateY(0); }
 
   .resultado-box {
     background: var(--surface);
@@ -435,7 +423,6 @@
     border-radius: 12px;
     padding: 1.5rem;
     min-height: 300px;
-    position: relative;
     display: flex;
     flex-direction: column;
   }
@@ -448,16 +435,17 @@
     justify-content: center;
     color: var(--muted);
     gap: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
   }
 
   .resultado-placeholder .icon { font-size: 3rem; opacity: 0.4; }
 
   .resultado-text {
     flex: 1;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.7;
     white-space: pre-wrap;
-    font-family: 'DM Sans', sans-serif;
   }
 
   .btn-copiar {
@@ -481,9 +469,8 @@
   /* CALCULADORA */
   .calc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1rem;
-    margin-bottom: 1.5rem;
   }
 
   .calc-card {
@@ -518,45 +505,6 @@
   .calc-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
 
   /* HISTORICO */
-  .historico-empty {
-    text-align: center;
-    padding: 3rem;
-    color: var(--muted);
-  }
-
-  .historico-empty .icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
-
-  .historico-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    background: var(--surface);
-    font-size: 0.85rem;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .historico-item .hi-emoji { font-size: 1.5rem; }
-
-  .historico-item .hi-info { flex: 1; }
-
-  .historico-item .hi-name { font-weight: 500; margin-bottom: 2px; }
-
-  .historico-item .hi-time { color: var(--muted); font-size: 0.75rem; }
-
-  .historico-item .hi-badge {
-    font-size: 0.7rem;
-    padding: 3px 8px;
-    border-radius: 4px;
-    background: rgba(255,107,43,0.15);
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  /* STATS ROW */
   .stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -564,7 +512,7 @@
     margin-bottom: 2rem;
   }
 
-  @media(max-width: 768px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+  @media(max-width: 700px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
 
   .stat-card {
     background: var(--surface);
@@ -585,7 +533,27 @@
 
   .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
 
-  /* LOADING */
+  .historico-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    font-size: 0.85rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .historico-empty {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+  }
+
+  .historico-empty .icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+
   .loading {
     display: flex;
     align-items: center;
@@ -597,8 +565,7 @@
   }
 
   .spinner {
-    width: 18px;
-    height: 18px;
+    width: 18px; height: 18px;
     border: 2px solid var(--border);
     border-top-color: var(--accent);
     border-radius: 50%;
@@ -607,35 +574,22 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ALERT POST AGORA */
-  .alert-post {
-    background: linear-gradient(135deg, rgba(255,107,43,0.15), rgba(255,61,127,0.1));
-    border: 1px solid rgba(255,107,43,0.4);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.85rem;
-  }
-
-  .alert-post .alert-icon { font-size: 1.5rem; }
-
-  .alert-post strong { color: var(--accent); font-family: 'Syne', sans-serif; }
-
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  /* RESPONSIVE TABS */
   @media(max-width: 600px) {
     .tabs { padding: 1rem 1rem 0; }
     main { padding: 0 1rem 1rem; }
     header { padding: 0 1rem; }
     .panel { padding: 1.2rem; }
-    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .lojas-grid { grid-template-columns: repeat(3,1fr); }
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
   }
 </style>
 </head>
@@ -646,84 +600,330 @@
     <span class="dot"></span>
     Clubinho <span>Achadinhos</span>
   </div>
-  <div class="header-right">
+  <div>
     <span class="badge-live">● Ao vivo</span>
   </div>
 </header>
 
-<div class="tabs" id="tabs">
-  <div class="tab active" onclick="showTab('trending')"><span class="tab-icon">🔥</span>Trending Agora</div>
-  <div class="tab" onclick="showTab('vendidos')"><span class="tab-icon">📈</span>Mais Vendidos 30d</div>
-  <div class="tab" onclick="showTab('ofertas')"><span class="tab-icon">💸</span>Melhores Ofertas</div>
-  <div class="tab" onclick="showTab('gerador')"><span class="tab-icon">✍️</span>Gerar Postagem</div>
-  <div class="tab" onclick="showTab('calc')"><span class="tab-icon">💰</span>Calculadora</div>
-  <div class="tab" onclick="showTab('historico')"><span class="tab-icon">📋</span>Histórico</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('buscar')">🔍 Buscar Produtos</div>
+  <div class="tab" onclick="showTab('trending')">🔥 Trending Agora</div>
+  <div class="tab" onclick="showTab('categorias')">📦 Por Categoria</div>
+  <div class="tab" onclick="showTab('gerador')">✍️ Gerar Postagem</div>
+  <div class="tab" onclick="showTab('calc')">💰 Calculadora</div>
+  <div class="tab" onclick="showTab('historico')">📋 Histórico</div>
 </div>
 
 <main>
 
+  <!-- ABA BUSCAR -->
+  <div class="panel active" id="panel-buscar">
+    <div class="section-title">🔍 Buscar Produtos</div>
+    <div class="section-sub">Digite o produto e busque nas maiores lojas do Brasil ao mesmo tempo</div>
+
+    <div class="search-bar">
+      <input class="search-input" id="search-input" placeholder="Ex: Airfryer, Fone Bluetooth, Perfume..." onkeydown="if(event.key==='Enter')buscarTodos()">
+      <button class="btn-search" onclick="buscarTodos()">🔍 Buscar em Todas</button>
+    </div>
+
+    <div id="search-results" style="display:none">
+      <div class="section-title" style="font-size:1rem;margin-bottom:1rem">Clique na loja para ver os resultados:</div>
+      <div class="lojas-grid" id="search-lojas"></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-title" style="font-size:1rem;margin-bottom:1rem">🏪 Acessar lojas diretamente</div>
+    <div class="lojas-grid">
+      <a class="loja-btn" href="https://www.amazon.com.br/s?k=ofertas+do+dia" target="_blank">
+        <span class="loja-icon">📦</span>
+        <span class="loja-name">Amazon</span>
+        <span class="loja-sub">Ofertas do dia</span>
+      </a>
+      <a class="loja-btn" href="https://shopee.com.br/m/shopping-gratis" target="_blank">
+        <span class="loja-icon">🛍️</span>
+        <span class="loja-name">Shopee</span>
+        <span class="loja-sub">Produtos em alta</span>
+      </a>
+      <a class="loja-btn" href="https://www.magazineluiza.com.br/ofertas-do-dia/" target="_blank">
+        <span class="loja-icon">🛒</span>
+        <span class="loja-name">Magalu</span>
+        <span class="loja-sub">Ofertas do dia</span>
+      </a>
+      <a class="loja-btn" href="https://www.americanas.com.br/hotsite/ofertas-do-dia" target="_blank">
+        <span class="loja-icon">⭐</span>
+        <span class="loja-name">Americanas</span>
+        <span class="loja-sub">Promoções</span>
+      </a>
+      <a class="loja-btn" href="https://www.mercadolivre.com.br/ofertas" target="_blank">
+        <span class="loja-icon">🟡</span>
+        <span class="loja-name">Mercado Livre</span>
+        <span class="loja-sub">Ofertas</span>
+      </a>
+      <a class="loja-btn" href="https://www.netshoes.com.br/outlet" target="_blank">
+        <span class="loja-icon">👟</span>
+        <span class="loja-name">Netshoes</span>
+        <span class="loja-sub">Outlet</span>
+      </a>
+    </div>
+  </div>
+
   <!-- ABA TRENDING -->
-  <div class="panel active" id="panel-trending">
+  <div class="panel" id="panel-trending">
     <div class="alert-post">
-      <span class="alert-icon">🚨</span>
-      <div><strong>3 produtos em alta agora!</strong> Airfryer, Perfume importado e Fone Bluetooth estão explodindo nas buscas. Momento ideal pra postar!</div>
+      <span style="font-size:1.5rem">🚨</span>
+      <div><strong>Dica:</strong> Clique em qualquer item para buscar nas lojas e encontrar a melhor oferta!</div>
     </div>
 
-    <div class="section-title">🔥 Trending Agora</div>
-    <div class="section-sub">Produtos mais buscados no Google nas últimas horas — atualizado em tempo real</div>
+    <div class="section-title">🔥 Google Trends — Brasil Agora</div>
+    <div class="section-sub">Produtos mais buscados no momento — clique para ver nas lojas</div>
 
-    <div class="filters" id="filters-trending">
-      <button class="filter-btn active" onclick="filterTrending('todos',this)">Todos</button>
-      <button class="filter-btn" onclick="filterTrending('eletronicos',this)">Eletrônicos</button>
-      <button class="filter-btn" onclick="filterTrending('beleza',this)">Beleza</button>
-      <button class="filter-btn" onclick="filterTrending('casa',this)">Casa</button>
-      <button class="filter-btn" onclick="filterTrending('moda',this)">Moda</button>
-      <button class="filter-btn" onclick="filterTrending('esporte',this)">Esporte</button>
+    <div class="trends-container" id="trends-container"></div>
+
+    <hr class="divider">
+
+    <div class="section-title" style="font-size:1rem;margin-bottom:1rem">📊 Ver Trends por Plataforma</div>
+    <div class="lojas-grid">
+      <a class="loja-btn" href="https://trends.google.com.br/trending?geo=BR&hl=pt-BR" target="_blank">
+        <span class="loja-icon">📈</span>
+        <span class="loja-name">Google Trends</span>
+        <span class="loja-sub">Buscas do momento</span>
+      </a>
+      <a class="loja-btn" href="https://www.amazon.com.br/gp/bestsellers" target="_blank">
+        <span class="loja-icon">📦</span>
+        <span class="loja-name">Amazon Top</span>
+        <span class="loja-sub">Mais vendidos</span>
+      </a>
+      <a class="loja-btn" href="https://shopee.com.br/m/tendencias" target="_blank">
+        <span class="loja-icon">🛍️</span>
+        <span class="loja-name">Shopee Trends</span>
+        <span class="loja-sub">Em alta agora</span>
+      </a>
+      <a class="loja-btn" href="https://www.mercadolivre.com.br/mais-vendidos" target="_blank">
+        <span class="loja-icon">🟡</span>
+        <span class="loja-name">ML Mais Vendidos</span>
+        <span class="loja-sub">Ranking geral</span>
+      </a>
     </div>
-
-    <div class="products-grid" id="grid-trending"></div>
   </div>
 
-  <!-- ABA MAIS VENDIDOS -->
-  <div class="panel" id="panel-vendidos">
-    <div class="section-title">📈 Mais Vendidos — Últimos 30 dias</div>
-    <div class="section-sub">Ranking dos 100 produtos com maior volume de vendas no período</div>
+  <!-- ABA CATEGORIAS -->
+  <div class="panel" id="panel-categorias">
+    <div class="section-title">📦 Explorar por Categoria</div>
+    <div class="section-sub">Acesse direto os mais vendidos e em promoção de cada categoria nas principais lojas</div>
 
-    <div class="filters" id="filters-vendidos">
-      <button class="filter-btn active" onclick="filterVendidos('todos',this)">Todos</button>
-      <button class="filter-btn" onclick="filterVendidos('amazon',this)">Amazon</button>
-      <button class="filter-btn" onclick="filterVendidos('shopee',this)">Shopee</button>
-      <button class="filter-btn" onclick="filterVendidos('magalu',this)">Magalu</button>
+    <!-- ELETRÔNICOS -->
+    <div class="cat-section">
+      <div class="cat-title">⚡ Eletrônicos & Tecnologia</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/electronics" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Mais Vendidos</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Electronics-cat.11036567" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Eletrônicos em Alta</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.magazineluiza.com.br/celulares-e-smartphones/s/te/tcsp/" target="_blank">
+          <span class="cat-emoji">🛒</span>
+          <div class="cat-info"><span class="cat-name">Celulares Oferta</span><span class="cat-loja">Magalu</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.americanas.com.br/categoria/informatica" target="_blank">
+          <span class="cat-emoji">⭐</span>
+          <div class="cat-info"><span class="cat-name">Informática</span><span class="cat-loja">Americanas</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.mercadolivre.com.br/mais-vendidos/MLB1648#origin=pdp" target="_blank">
+          <span class="cat-emoji">🟡</span>
+          <div class="cat-info"><span class="cat-name">Eletrônicos Top</span><span class="cat-loja">Mercado Livre</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=fone+bluetooth&s=review-rank" target="_blank">
+          <span class="cat-emoji">🎧</span>
+          <div class="cat-info"><span class="cat-name">Fones Bluetooth</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
 
-    <table class="ranking-table" id="table-vendidos">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Produto</th>
-          <th>Loja</th>
-          <th>Preço</th>
-          <th>Tendência 30d</th>
-          <th>Status</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody id="tbody-vendidos"></tbody>
-    </table>
-  </div>
-
-  <!-- ABA MELHORES OFERTAS -->
-  <div class="panel" id="panel-ofertas">
-    <div class="section-title">💸 Melhores Ofertas do Momento</div>
-    <div class="section-sub">Ordenado por maior desconto — produtos com badge 🔴 combinam alta busca + desconto</div>
-
-    <div class="filters">
-      <button class="filter-btn active">Maior Desconto</button>
-      <button class="filter-btn">Menor Preço</button>
-      <button class="filter-btn">Mais Relevante</button>
+    <!-- BELEZA -->
+    <div class="cat-section">
+      <div class="cat-title">💄 Beleza & Cuidados</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/beauty" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Mais Vendidos Beleza</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Beauty-Health-cat.11036249" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Beleza & Saúde</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/beauty/18910094011" target="_blank">
+          <span class="cat-emoji">🌸</span>
+          <div class="cat-info"><span class="cat-name">Skincare Top</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=perfume+importado&s=review-rank" target="_blank">
+          <span class="cat-emoji">✨</span>
+          <div class="cat-info"><span class="cat-name">Perfumes Importados</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.americanas.com.br/categoria/perfumaria-cosmeticos" target="_blank">
+          <span class="cat-emoji">⭐</span>
+          <div class="cat-info"><span class="cat-name">Perfumaria</span><span class="cat-loja">Americanas</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.magazineluiza.com.br/beleza-e-perfumaria/l/bp/" target="_blank">
+          <span class="cat-emoji">🛒</span>
+          <div class="cat-info"><span class="cat-name">Beleza em Oferta</span><span class="cat-loja">Magalu</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
 
-    <div class="products-grid" id="grid-ofertas"></div>
+    <!-- CASA -->
+    <div class="cat-section">
+      <div class="cat-title">🏠 Casa & Cozinha</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/kitchen" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Mais Vendidos Casa</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=airfryer&s=review-rank" target="_blank">
+          <span class="cat-emoji">🍟</span>
+          <div class="cat-info"><span class="cat-name">Airfryers Top</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.magazineluiza.com.br/eletrodomesticos/l/ed/" target="_blank">
+          <span class="cat-emoji">🛒</span>
+          <div class="cat-info"><span class="cat-name">Eletrodomésticos</span><span class="cat-loja">Magalu</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Home-Appliances-cat.11036246" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Casa & Cozinha</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.americanas.com.br/categoria/cama-mesa-e-banho" target="_blank">
+          <span class="cat-emoji">⭐</span>
+          <div class="cat-info"><span class="cat-name">Cama Mesa Banho</span><span class="cat-loja">Americanas</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.mercadolivre.com.br/mais-vendidos/MLB5726#origin=pdp" target="_blank">
+          <span class="cat-emoji">🟡</span>
+          <div class="cat-info"><span class="cat-name">Casa Top</span><span class="cat-loja">Mercado Livre</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MODA -->
+    <div class="cat-section">
+      <div class="cat-title">👗 Moda & Acessórios</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/fashion" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Moda Mais Vendida</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Fashion-cat.11036567" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Moda em Alta</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.netshoes.com.br/tenis" target="_blank">
+          <span class="cat-emoji">👟</span>
+          <div class="cat-info"><span class="cat-name">Tênis em Oferta</span><span class="cat-loja">Netshoes</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.centauro.com.br/tenis" target="_blank">
+          <span class="cat-emoji">🏃</span>
+          <div class="cat-info"><span class="cat-name">Tênis Esportivos</span><span class="cat-loja">Centauro</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=relogio+masculino&s=review-rank" target="_blank">
+          <span class="cat-emoji">⌚</span>
+          <div class="cat-info"><span class="cat-name">Relógios Top</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.americanas.com.br/categoria/moda-feminina" target="_blank">
+          <span class="cat-emoji">⭐</span>
+          <div class="cat-info"><span class="cat-name">Moda Feminina</span><span class="cat-loja">Americanas</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ESPORTE -->
+    <div class="cat-section">
+      <div class="cat-title">💪 Esporte & Saúde</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/sporting-goods" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Esporte Mais Vendidos</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=whey+protein&s=review-rank" target="_blank">
+          <span class="cat-emoji">🥛</span>
+          <div class="cat-info"><span class="cat-name">Suplementos Top</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.netshoes.com.br/suplementos" target="_blank">
+          <span class="cat-emoji">💊</span>
+          <div class="cat-info"><span class="cat-name">Suplementos</span><span class="cat-loja">Netshoes</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Sports-Outdoors-cat.11036248" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Esporte & Outdoor</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.centauro.com.br/fitness" target="_blank">
+          <span class="cat-emoji">🏋️</span>
+          <div class="cat-info"><span class="cat-name">Fitness</span><span class="cat-loja">Centauro</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/s?k=smartwatch&s=review-rank" target="_blank">
+          <span class="cat-emoji">⌚</span>
+          <div class="cat-info"><span class="cat-name">Smartwatches</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- BEBÊS -->
+    <div class="cat-section">
+      <div class="cat-title">👶 Bebês & Brinquedos</div>
+      <div class="cat-grid">
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/toys" target="_blank">
+          <span class="cat-emoji">📦</span>
+          <div class="cat-info"><span class="cat-name">Brinquedos Top</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.amazon.com.br/gp/bestsellers/baby" target="_blank">
+          <span class="cat-emoji">👶</span>
+          <div class="cat-info"><span class="cat-name">Bebês Mais Vendidos</span><span class="cat-loja">Amazon</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://shopee.com.br/Babies-Kids-cat.11036251" target="_blank">
+          <span class="cat-emoji">🛍️</span>
+          <div class="cat-info"><span class="cat-name">Bebês & Kids</span><span class="cat-loja">Shopee</span></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="cat-btn" href="https://www.americanas.com.br/categoria/brinquedos" target="_blank">
+          <span class="cat-emoji">⭐</span>
+          <div class="cat-info"><span class="cat-name">Brinquedos</span><span class="cat-loja">Americanas</span></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
   </div>
 
   <!-- ABA GERADOR -->
@@ -738,16 +938,16 @@
           <input class="form-input" id="g-nome" placeholder="Ex: Airfryer Mondial 4L 1500W">
         </div>
         <div class="form-group">
-          <label>Link de Afiliado (Afilio)</label>
+          <label>Link de Afiliado (Afilio / Deeplink)</label>
           <input class="form-input" id="g-link" placeholder="https://tracking.afilio.com.br/...">
         </div>
         <div class="form-group">
           <label>Preço Atual</label>
-          <input class="form-input" id="g-preco" placeholder="R$ 189,90" type="text">
+          <input class="form-input" id="g-preco" placeholder="R$ 189,90">
         </div>
         <div class="form-group">
           <label>Preço Antigo (opcional)</label>
-          <input class="form-input" id="g-preco-old" placeholder="R$ 299,90" type="text">
+          <input class="form-input" id="g-preco-old" placeholder="R$ 299,90">
         </div>
         <div class="form-group">
           <label>Informações extras (opcional)</label>
@@ -755,7 +955,7 @@
         </div>
         <div class="form-group">
           <label>Estilo do Anúncio</label>
-          <div class="style-grid" id="style-grid">
+          <div class="style-grid">
             <div class="style-option active" onclick="selectStyle(this,'urgencia')">🚨 Urgência</div>
             <div class="style-option" onclick="selectStyle(this,'economia')">💰 Economia</div>
             <div class="style-option" onclick="selectStyle(this,'desejo')">😍 Desejo</div>
@@ -768,7 +968,7 @@
       <div class="resultado-box" id="resultado-box">
         <div class="resultado-placeholder" id="resultado-placeholder">
           <div class="icon">✍️</div>
-          <div>Preencha os campos e clique em <strong>Gerar Postagem</strong></div>
+          <div>Preencha os campos ao lado e clique em <strong>Gerar Postagem</strong><br><br>A IA vai criar um anúncio persuasivo pronto pra copiar no Telegram</div>
         </div>
         <div class="resultado-text" id="resultado-text" style="display:none"></div>
         <button class="btn-copiar" id="btn-copiar" onclick="copiarPostagem()">📋 Copiar para Telegram</button>
@@ -779,7 +979,7 @@
   <!-- ABA CALCULADORA -->
   <div class="panel" id="panel-calc">
     <div class="section-title">💰 Calculadora de Comissão</div>
-    <div class="section-sub">Simule seus ganhos por produto e volume de vendas</div>
+    <div class="section-sub">Simule seus ganhos e defina sua meta mensal</div>
 
     <div class="calc-grid">
       <div class="calc-card">
@@ -789,7 +989,7 @@
           <input class="form-input" id="calc-preco" type="number" placeholder="189.90" oninput="calcular()">
         </div>
         <div class="form-group" style="margin-top:0.8rem">
-          <label>Comissão da loja (%)</label>
+          <label>Comissão da loja</label>
           <select class="form-select" id="calc-pct" onchange="calcular()">
             <option value="3">Amazon — Eletrônicos (3%)</option>
             <option value="6" selected>Amazon — Beleza (6%)</option>
@@ -806,7 +1006,7 @@
       </div>
 
       <div class="calc-card">
-        <h3>Por Volume de Vendas</h3>
+        <h3>Por Volume</h3>
         <div class="form-group">
           <label>Vendas por dia estimadas</label>
           <input class="form-input" id="calc-vendas" type="number" placeholder="10" oninput="calcular()">
@@ -841,28 +1041,27 @@
 
   <!-- ABA HISTÓRICO -->
   <div class="panel" id="panel-historico">
-    <div class="stats-row" id="stats-row">
+    <div class="stats-row">
       <div class="stat-card">
         <div class="stat-value" id="stat-hoje">0</div>
         <div class="stat-label">Posts hoje</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-semana">0</div>
-        <div class="stat-label">Posts esta semana</div>
+        <div class="stat-label">Esta semana</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-mes">0</div>
-        <div class="stat-label">Posts este mês</div>
+        <div class="stat-label">Este mês</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="stat-total">0</div>
-        <div class="stat-label">Total de posts</div>
+        <div class="stat-label">Total</div>
       </div>
     </div>
 
     <div class="section-title">📋 Histórico de Postagens</div>
     <div class="section-sub">Tudo que você gerou — evite repetir produtos</div>
-
     <div id="historico-list">
       <div class="historico-empty">
         <div class="icon">📭</div>
@@ -874,159 +1073,78 @@
 </main>
 
 <script>
-// ============ DADOS SIMULADOS ============
-
-const produtosTrending = [
-  { nome: "Airfryer Mondial 4L 1500W", emoji: "🍟", preco: "R$ 189,90", precoOld: "R$ 299,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "casa", score: 95 },
-  { nome: "Fone Bluetooth JBL Tune 510BT", emoji: "🎧", preco: "R$ 179,00", precoOld: "R$ 259,00", badge: "hot", badgeLabel: "🔴 Explodindo", cat: "eletronicos", score: 91 },
-  { nome: "Perfume Importado 212 Men", emoji: "🌸", preco: "R$ 219,00", precoOld: "R$ 380,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "beleza", score: 88 },
-  { nome: "Tênis Nike Air Max Excee", emoji: "👟", preco: "R$ 349,99", precoOld: "R$ 499,99", badge: "hot", badgeLabel: "🔴 Explodindo", cat: "moda", score: 85 },
-  { nome: "Smartwatch Samsung Galaxy Watch 6", emoji: "⌚", preco: "R$ 899,00", precoOld: "R$ 1.299,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "eletronicos", score: 82 },
-  { nome: "Kit Skincare Vitamina C Neutrogena", emoji: "✨", preco: "R$ 89,90", precoOld: "R$ 139,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "beleza", score: 80 },
-  { nome: "Aspirador Robô Multilaser Titan", emoji: "🤖", preco: "R$ 699,00", precoOld: "R$ 999,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "casa", score: 77 },
-  { nome: "Whey Protein Integral Médica 1kg", emoji: "💪", preco: "R$ 129,90", precoOld: "R$ 199,90", badge: "hot", badgeLabel: "🔴 Em alta", cat: "esporte", score: 75 },
-  { nome: "Mochila Antifurto USB 30L", emoji: "🎒", preco: "R$ 89,00", precoOld: "R$ 149,00", badge: null, badgeLabel: null, cat: "moda", score: 70 },
-  { nome: "Câmera de Segurança Intelbras WiFi", emoji: "📷", preco: "R$ 169,90", precoOld: "R$ 249,90", badge: "trend", badgeLabel: "📈 Subindo", cat: "eletronicos", score: 68 },
-  { nome: "Chaleira Elétrica Philco 1.7L", emoji: "☕", preco: "R$ 79,90", precoOld: "R$ 119,90", badge: null, badgeLabel: null, cat: "casa", score: 65 },
-  { nome: "Protetor Solar FPS 70 La Roche", emoji: "🌞", preco: "R$ 69,90", precoOld: "R$ 99,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "beleza", score: 63 },
-];
-
-const produtosVendidos = [
-  { nome: "Airfryer Philco 4.2L Digital", loja: "Amazon", preco: "R$ 219,90", trend: 92, status: "fire" },
-  { nome: "iPhone 15 128GB", loja: "Amazon", preco: "R$ 4.299,00", trend: 88, status: "fire" },
-  { nome: "Notebook Lenovo IdeaPad i5", loja: "Magalu", preco: "R$ 2.499,00", trend: 85, status: "up" },
-  { nome: "Fone JBL Tune 510BT", loja: "Shopee", preco: "R$ 179,00", trend: 82, status: "fire" },
-  { nome: "Kit Maquiagem Luisance", loja: "Shopee", preco: "R$ 49,90", trend: 78, status: "up" },
-  { nome: "Tênis Olympikus Running", loja: "Amazon", preco: "R$ 199,90", trend: 75, status: "up" },
-  { nome: "Panela de Pressão Elétrica Mondial", loja: "Magalu", preco: "R$ 299,00", trend: 71, status: "stable" },
-  { nome: "Whey Protein Max Titanium 1kg", loja: "Amazon", preco: "R$ 149,90", trend: 68, status: "up" },
-  { nome: "Smart TV LG 50\" 4K", loja: "Magalu", preco: "R$ 1.899,00", trend: 65, status: "stable" },
-  { nome: "Cadeira Gamer ThunderX3", loja: "Amazon", preco: "R$ 1.199,00", trend: 62, status: "up" },
-  { nome: "Vitamina C 1000mg Vitafor", loja: "Shopee", preco: "R$ 34,90", trend: 60, status: "up" },
-  { nome: "Aspirador Vertical Electrolux", loja: "Magalu", preco: "R$ 449,00", trend: 58, status: "stable" },
-  { nome: "Perfume 212 NYC Men 100ml", loja: "Amazon", preco: "R$ 219,00", trend: 55, status: "up" },
-  { nome: "Mouse Gamer Logitech G203", loja: "Amazon", preco: "R$ 179,00", trend: 53, status: "stable" },
-  { nome: "Câmera Instax Mini 12 Fujifilm", loja: "Shopee", preco: "R$ 399,00", trend: 50, status: "stable" },
-];
-
-const produtosOfertas = [
-  { nome: "Fritadeira Air Fryer Mondial Digital 4L", emoji: "🍟", preco: "R$ 159,90", precoOld: "R$ 299,90", desconto: 47, postNow: true },
-  { nome: "Smartwatch Xiaomi Redmi Watch 3", emoji: "⌚", preco: "R$ 299,00", precoOld: "R$ 549,00", desconto: 45, postNow: true },
-  { nome: "Fone Sony WH-1000XM4 Noise Cancel", emoji: "🎧", preco: "R$ 1.099,00", precoOld: "R$ 1.999,00", desconto: 45, postNow: false },
-  { nome: "Kit Perfume Importado 212 + Body", emoji: "🌸", preco: "R$ 219,00", precoOld: "R$ 399,00", desconto: 45, postNow: true },
-  { nome: "Tênis Nike Air Force 1 '07", emoji: "👟", preco: "R$ 379,00", precoOld: "R$ 649,00", desconto: 42, postNow: false },
-  { nome: "Notebook Acer Aspire i5 8GB", emoji: "💻", preco: "R$ 2.199,00", precoOld: "R$ 3.699,00", desconto: 41, postNow: false },
-  { nome: "Câmera Canon EOS Rebel SL3", emoji: "📷", preco: "R$ 3.499,00", precoOld: "R$ 5.799,00", desconto: 40, postNow: false },
-  { nome: "Protetor Solar Anasol FPS 70 150g", emoji: "☀️", preco: "R$ 32,90", precoOld: "R$ 54,90", desconto: 40, postNow: false },
-];
-
-let historicoList = [];
-let estiloSelecionado = 'urgencia';
-
 // ============ TABS ============
 function showTab(name) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    const tabs = ['trending','vendidos','ofertas','gerador','calc','historico'];
-    t.classList.toggle('active', tabs[i] === name);
-  });
+  const tabNames = ['buscar','trending','categorias','gerador','calc','historico'];
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', tabNames[i] === name));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
 }
 
-// ============ RENDER TRENDING ============
-function renderTrending(filter = 'todos') {
-  const grid = document.getElementById('grid-trending');
-  const filtered = filter === 'todos' ? produtosTrending : produtosTrending.filter(p => p.cat === filter);
-  grid.innerHTML = filtered.map(p => `
-    <div class="product-card">
-      ${p.badge ? `<span class="badge badge-${p.badge === 'fire' ? 'hot' : p.badge === 'trend' ? 'trend' : 'off'}">${p.badgeLabel}</span>` : ''}
-      <div class="card-img">${p.emoji}</div>
-      <div class="card-body">
-        <div class="card-name">${p.nome}</div>
-        <div>
-          <span class="card-old">${p.precoOld}</span>
-          <span class="card-price">${p.preco}</span>
-        </div>
-        <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
-          <div class="trend-bar"><div class="trend-bar-fill" style="width:${p.score}%"></div></div>
-          <span style="font-size:0.72rem;color:var(--muted)">${p.score}</span>
-        </div>
-        <div class="card-actions">
-          <button class="btn-usar" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','${p.precoOld}')">Usar este ➜</button>
-        </div>
+// ============ BUSCA ============
+const lojas = [
+  { nome: 'Amazon', emoji: '📦', url: 'https://www.amazon.com.br/s?k=' },
+  { nome: 'Shopee', emoji: '🛍️', url: 'https://shopee.com.br/search?keyword=' },
+  { nome: 'Magalu', emoji: '🛒', url: 'https://www.magazineluiza.com.br/busca/' },
+  { nome: 'Americanas', emoji: '⭐', url: 'https://www.americanas.com.br/busca/' },
+  { nome: 'Mercado Livre', emoji: '🟡', url: 'https://lista.mercadolivre.com.br/' },
+  { nome: 'Netshoes', emoji: '👟', url: 'https://www.netshoes.com.br/busca?q=' },
+];
+
+function buscarTodos() {
+  const termo = document.getElementById('search-input').value.trim();
+  if (!termo) return;
+
+  const div = document.getElementById('search-results');
+  const grid = document.getElementById('search-lojas');
+  div.style.display = 'block';
+
+  grid.innerHTML = lojas.map(l => `
+    <a class="loja-btn" href="${l.url}${encodeURIComponent(termo)}" target="_blank">
+      <span class="loja-icon">${l.emoji}</span>
+      <span class="loja-name">${l.nome}</span>
+      <span class="loja-sub">"${termo}"</span>
+    </a>
+  `).join('');
+
+  grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ============ TRENDING (simulado com produtos reais típicos) ============
+const trendingData = [
+  { nome: 'Airfryer', meta: 'airfryer', status: 'fire', cat: 'Casa' },
+  { nome: 'Fone Bluetooth', meta: 'fone+bluetooth', status: 'fire', cat: 'Eletrônicos' },
+  { nome: 'Perfume Importado', meta: 'perfume+importado', status: 'up', cat: 'Beleza' },
+  { nome: 'Smartwatch', meta: 'smartwatch', status: 'fire', cat: 'Eletrônicos' },
+  { nome: 'Whey Protein', meta: 'whey+protein', status: 'up', cat: 'Esporte' },
+  { nome: 'Tênis Nike', meta: 'tenis+nike', status: 'fire', cat: 'Moda' },
+  { nome: 'Protetor Solar FPS 70', meta: 'protetor+solar+fps+70', status: 'up', cat: 'Beleza' },
+  { nome: 'Aspirador Robô', meta: 'aspirador+robo', status: 'up', cat: 'Casa' },
+  { nome: 'Câmera de Segurança WiFi', meta: 'camera+seguranca+wifi', status: 'stable', cat: 'Eletrônicos' },
+  { nome: 'Kit Skincare Vitamina C', meta: 'skincare+vitamina+c', status: 'fire', cat: 'Beleza' },
+  { nome: 'Notebook i5', meta: 'notebook+i5', status: 'up', cat: 'Eletrônicos' },
+  { nome: 'Cadeira Gamer', meta: 'cadeira+gamer', status: 'stable', cat: 'Casa' },
+];
+
+function renderTrending() {
+  const container = document.getElementById('trends-container');
+  container.innerHTML = trendingData.map((t, i) => `
+    <a class="trend-card" href="https://www.amazon.com.br/s?k=${t.meta}&s=review-rank" target="_blank">
+      <div class="trend-rank ${i < 3 ? 'top' : ''}">${i < 3 ? ['🥇','🥈','🥉'][i] : i+1}</div>
+      <div class="trend-info">
+        <div class="trend-name">${t.nome}</div>
+        <div class="trend-meta">${t.cat} · Clique para buscar</div>
       </div>
-    </div>
+      <span class="trend-badge ${t.status === 'fire' ? 'tb-fire' : t.status === 'up' ? 'tb-up' : 'tb-stable'}">
+        ${t.status === 'fire' ? '🔥 Explodindo' : t.status === 'up' ? '📈 Subindo' : '➡️ Estável'}
+      </span>
+    </a>
   `).join('');
-}
-
-function filterTrending(cat, btn) {
-  document.querySelectorAll('#filters-trending .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTrending(cat);
-}
-
-// ============ RENDER VENDIDOS ============
-function renderVendidos(filter = 'todos') {
-  const tbody = document.getElementById('tbody-vendidos');
-  const filtered = filter === 'todos' ? produtosVendidos : produtosVendidos.filter(p => p.loja.toLowerCase() === filter);
-  tbody.innerHTML = filtered.map((p, i) => `
-    <tr>
-      <td class="rank-num ${i < 3 ? 'top3' : ''}">${i < 3 ? ['🥇','🥈','🥉'][i] : i+1}</td>
-      <td style="max-width:200px">${p.nome}</td>
-      <td><span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:var(--border);color:var(--muted)">${p.loja}</span></td>
-      <td style="font-weight:600;color:var(--accent3)">${p.preco}</td>
-      <td>
-        <div class="trend-bar"><div class="trend-bar-fill" style="width:${p.trend}%"></div></div>
-      </td>
-      <td>
-        <span class="trend-indicator ${p.status === 'fire' ? 'trend-fire' : p.status === 'up' ? 'trend-up' : 'trend-stable'}">
-          ${p.status === 'fire' ? '🔥 Explodindo' : p.status === 'up' ? '📈 Subindo' : '➡️ Estável'}
-        </span>
-      </td>
-      <td><button class="btn-usar" style="width:80px" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','')">Usar ➜</button></td>
-    </tr>
-  `).join('');
-}
-
-function filterVendidos(loja, btn) {
-  document.querySelectorAll('#filters-vendidos .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderVendidos(loja);
-}
-
-// ============ RENDER OFERTAS ============
-function renderOfertas() {
-  const grid = document.getElementById('grid-ofertas');
-  grid.innerHTML = produtosOfertas.map(p => `
-    <div class="product-card">
-      <span class="badge badge-off">-${p.desconto}%</span>
-      ${p.postNow ? '<span style="position:absolute;top:10px;right:10px;background:var(--accent2);color:white;font-size:0.65rem;padding:2px 6px;border-radius:4px;font-weight:700">POST AGORA</span>' : ''}
-      <div class="card-img">${p.emoji}</div>
-      <div class="card-body">
-        <div class="card-name">${p.nome}</div>
-        <div>
-          <span class="card-old">${p.precoOld}</span>
-          <span class="card-price">${p.preco}</span>
-        </div>
-        <div class="card-actions">
-          <button class="btn-usar" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','${p.precoOld}')">Usar este ➜</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ============ USAR PRODUTO ============
-function usarProduto(nome, preco, precoOld) {
-  showTab('gerador');
-  setTimeout(() => {
-    document.getElementById('g-nome').value = nome;
-    document.getElementById('g-preco').value = preco;
-    document.getElementById('g-preco-old').value = precoOld;
-  }, 100);
 }
 
 // ============ ESTILO ============
+let estiloSelecionado = 'urgencia';
+
 function selectStyle(el, style) {
   document.querySelectorAll('.style-option').forEach(s => s.classList.remove('active'));
   el.classList.add('active');
@@ -1041,10 +1159,7 @@ async function gerarPostagem() {
   const precoOld = document.getElementById('g-preco-old').value.trim();
   const extra = document.getElementById('g-extra').value.trim();
 
-  if (!nome || !preco) {
-    alert('Preencha pelo menos o nome do produto e o preço atual!');
-    return;
-  }
+  if (!nome || !preco) { alert('Preencha pelo menos o nome do produto e o preço atual!'); return; }
 
   const placeholder = document.getElementById('resultado-placeholder');
   const resultText = document.getElementById('resultado-text');
@@ -1058,33 +1173,33 @@ async function gerarPostagem() {
   const estilos = {
     urgencia: "Crie um anúncio URGENTE com gatilhos de escassez e urgência. Use frases como 'estoque limitado', 'só hoje', 'acabando'. Tom acelerado e impactante.",
     economia: "Foque na ECONOMIA e no quanto a pessoa vai ECONOMIZAR. Destaque o valor economizado em reais. Tom racional e objetivo.",
-    desejo: "Foque nos BENEFÍCIOS e no quanto o produto vai melhorar a vida da pessoa. Tom aspiracional e emotivo. Faça a pessoa querer muito o produto.",
-    presente: "Foque na ideia de PRESENTE perfeito para alguém especial. Tom caloroso e afetivo. Ideal para datas comemorativas."
+    desejo: "Foque nos BENEFÍCIOS e no quanto o produto vai melhorar a vida da pessoa. Tom aspiracional e emotivo.",
+    presente: "Foque na ideia de PRESENTE perfeito para alguém especial. Tom caloroso e afetivo."
   };
 
   const descontoCalc = precoOld ? Math.round((1 - parseFloat(preco.replace('R$','').replace(',','.').trim()) / parseFloat(precoOld.replace('R$','').replace(',','.').trim())) * 100) : null;
+  const linkFinal = link || '[COLE SEU LINK AFILIADO AQUI]';
 
   const prompt = `Você é um especialista em marketing digital e copywriting para grupos de achadinhos no Telegram brasileiro.
 
-Crie uma postagem de oferta EXTREMAMENTE persuasiva e irresistível para o Telegram com as informações abaixo.
+Crie uma postagem de oferta EXTREMAMENTE persuasiva para o Telegram com:
 
 Produto: ${nome}
 Preço atual: ${preco}
 ${precoOld ? `Preço antigo: ${precoOld}` : ''}
 ${descontoCalc ? `Desconto: ${descontoCalc}%` : ''}
-${link ? `Link: ${link}` : 'Link: [LINK DO AFILIADO]'}
-${extra ? `Informações extras: ${extra}` : ''}
+Link: ${linkFinal}
+${extra ? `Extras: ${extra}` : ''}
 
 Estilo: ${estilos[estiloSelecionado]}
 
-REGRAS OBRIGATÓRIAS:
-- Use emojis estrategicamente (não exagere)
+REGRAS:
+- Use emojis estrategicamente
 - Formato perfeito para Telegram
-- Inclua o link no final com um CTA forte
 - Máximo 15 linhas
-- Em português brasileiro natural e informal
-- NÃO use hashtags
-- Termine com o link entre colchetes como [🛒 GARANTIR OFERTA](${link || 'LINK_AFILIADO'})
+- Português brasileiro informal
+- SEM hashtags
+- Termine com o link assim: [🛒 GARANTIR OFERTA](${linkFinal})
 
 Retorne APENAS o texto da postagem, sem explicações.`;
 
@@ -1100,33 +1215,33 @@ Retorne APENAS o texto da postagem, sem explicações.`;
     });
 
     const data = await response.json();
-    const texto = data.content?.map(c => c.text || '').join('') || '';
+    const texto = data.content?.map(c => c.text || '').join('') || gerarPostLocal(nome, preco, precoOld, linkFinal, estiloSelecionado, descontoCalc, extra);
 
     resultText.innerHTML = '';
     resultText.style.whiteSpace = 'pre-wrap';
     resultText.textContent = texto;
     btnCopiar.classList.add('visible');
-
-    // Salva no histórico
-    salvarHistorico(nome, preco, texto);
+    salvarHistorico(nome, preco);
 
   } catch (e) {
-    resultText.textContent = gerarPostLocal(nome, preco, precoOld, link, estiloSelecionado, descontoCalc, extra);
+    const texto = gerarPostLocal(nome, preco, precoOld, linkFinal, estiloSelecionado, descontoCalc, extra);
+    resultText.innerHTML = '';
+    resultText.style.whiteSpace = 'pre-wrap';
+    resultText.textContent = texto;
     btnCopiar.classList.add('visible');
-    salvarHistorico(nome, preco, resultText.textContent);
+    salvarHistorico(nome, preco);
   }
 }
 
 function gerarPostLocal(nome, preco, precoOld, link, estilo, desconto, extra) {
-  const linkFinal = link || '[COLE SEU LINK AFILIADO AQUI]';
-  const economiaVal = precoOld && preco ?
+  const economia = precoOld && preco ?
     `R$ ${(parseFloat(precoOld.replace('R$','').replace(',','.').trim()) - parseFloat(preco.replace('R$','').replace(',','.').trim())).toFixed(2).replace('.',',')}` : null;
 
   const templates = {
-    urgencia: `🚨 OFERTA RELÂMPAGO — ACABANDO! 🚨\n\n🎯 ${nome}\n\n${precoOld ? `❌ De: ${precoOld}\n` : ''}✅ Por: ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n⚠️ Estoque LIMITADO — última vez que apareceu nesse preço esgotou em horas!\n\n${extra ? `📌 ${extra}\n\n` : ''}⏰ Não perca essa chance!\n\n[🛒 GARANTIR ANTES QUE ACABE](${linkFinal})`,
-    economia: `💰 ECONOMIA REAL DE VERDADE!\n\n🛍️ ${nome}\n\n${precoOld ? `Preço normal: ${precoOld}\n` : ''}💥 Hoje por apenas: ${preco}${desconto ? `\n\nVocê ECONOMIZA ${economiaVal || desconto+'%'} nessa compra!` : ''}\n\n${extra ? `✅ ${extra}\n\n` : ''}Isso é economia que faz diferença no seu bolso 💪\n\n[💰 COMPRAR COM DESCONTO](${linkFinal})`,
-    desejo: `😍 Olha essa BELEZA de oferta!\n\n✨ ${nome}\n\nEsse produto vai transformar sua rotina! Imagina ter isso em casa...\n\n${precoOld ? `De ${precoOld} ` : ''}por apenas ${preco}${desconto ? ` — ${desconto}% mais barato!` : ''}\n\n${extra ? `🌟 ${extra}\n\n` : ''}Você merece! Não se arrependa de não aproveitar 🥰\n\n[😍 QUERO ESSE AGORA](${linkFinal})`,
-    presente: `🎁 O PRESENTE PERFEITO está aqui!\n\n💝 ${nome}\n\nQue tal surpreender alguém especial? Esse produto é incrível!\n\n${precoOld ? `De ${precoOld} ` : ''}por ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n${extra ? `🎀 ${extra}\n\n` : ''}Perfeito para qualquer ocasião especial ❤️\n\n[🎁 GARANTIR O PRESENTE](${linkFinal})`
+    urgencia: `🚨 OFERTA RELÂMPAGO — ACABANDO! 🚨\n\n🎯 ${nome}\n\n${precoOld ? `❌ De: ${precoOld}\n` : ''}✅ Por: ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n⚠️ Estoque LIMITADO — última vez esgotou em horas!\n\n${extra ? `📌 ${extra}\n\n` : ''}⏰ Corre antes que acabe!\n\n[🛒 GARANTIR ANTES QUE ACABE](${link})`,
+    economia: `💰 ECONOMIA REAL!\n\n🛍️ ${nome}\n\n${precoOld ? `Preço normal: ${precoOld}\n` : ''}💥 Hoje por: ${preco}${economia ? `\n\n✅ Você ECONOMIZA ${economia}!` : ''}\n\n${extra ? `📌 ${extra}\n\n` : ''}Isso faz diferença no bolso 💪\n\n[💰 COMPRAR COM DESCONTO](${link})`,
+    desejo: `😍 Olha esse ACHADO!\n\n✨ ${nome}\n\nEsse produto vai transformar sua rotina!\n\n${precoOld ? `De ${precoOld} ` : ''}por apenas ${preco}${desconto ? ` — ${desconto}% OFF!` : ''}\n\n${extra ? `🌟 ${extra}\n\n` : ''}Você merece! 🥰\n\n[😍 QUERO ESSE AGORA](${link})`,
+    presente: `🎁 PRESENTE PERFEITO!\n\n💝 ${nome}\n\nSurpreenda alguém especial!\n\n${precoOld ? `De ${precoOld} ` : ''}por ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n${extra ? `🎀 ${extra}\n\n` : ''}Perfeito pra qualquer ocasião ❤️\n\n[🎁 GARANTIR O PRESENTE](${link})`
   };
 
   return templates[estilo] || templates.urgencia;
@@ -1143,13 +1258,14 @@ function copiarPostagem() {
 }
 
 // ============ HISTÓRICO ============
-function salvarHistorico(nome, preco, texto) {
+let historicoList = [];
+
+function salvarHistorico(nome, preco) {
   const emojis = ['🛍️','🔥','💥','🎯','⚡','🚀','💎','🎁'];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
   const now = new Date();
   const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
-  historicoList.unshift({ nome, preco, emoji, time: timeStr, texto });
+  historicoList.unshift({ nome, preco, emoji, time: timeStr });
   renderHistorico();
   updateStats();
 }
@@ -1157,27 +1273,27 @@ function salvarHistorico(nome, preco, texto) {
 function renderHistorico() {
   const list = document.getElementById('historico-list');
   if (historicoList.length === 0) {
-    list.innerHTML = '<div class="historico-empty"><div class="icon">📭</div><div>Nenhuma postagem gerada ainda.<br>Use o Gerador de Postagem pra começar!</div></div>';
+    list.innerHTML = '<div class="historico-empty"><div class="icon">📭</div><div>Nenhuma postagem gerada ainda.</div></div>';
     return;
   }
-  list.innerHTML = historicoList.map((h, i) => `
+  list.innerHTML = historicoList.map(h => `
     <div class="historico-item">
-      <div class="hi-emoji">${h.emoji}</div>
-      <div class="hi-info">
-        <div class="hi-name">${h.nome}</div>
-        <div class="hi-time">${h.preco} · ${h.time}</div>
+      <div style="font-size:1.5rem">${h.emoji}</div>
+      <div style="flex:1">
+        <div style="font-weight:500;margin-bottom:2px">${h.nome}</div>
+        <div style="font-size:0.75rem;color:var(--muted)">${h.preco} · ${h.time}</div>
       </div>
-      <span class="hi-badge">Gerado</span>
+      <span style="font-size:0.7rem;padding:3px 8px;border-radius:4px;background:rgba(255,107,43,0.15);color:var(--accent);font-weight:600">Gerado</span>
     </div>
   `).join('');
 }
 
 function updateStats() {
-  const total = historicoList.length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-hoje').textContent = total;
-  document.getElementById('stat-semana').textContent = total;
-  document.getElementById('stat-mes').textContent = total;
+  const t = historicoList.length;
+  document.getElementById('stat-total').textContent = t;
+  document.getElementById('stat-hoje').textContent = t;
+  document.getElementById('stat-semana').textContent = t;
+  document.getElementById('stat-mes').textContent = t;
 }
 
 // ============ CALCULADORA ============
@@ -1186,13 +1302,10 @@ function calcular() {
   const pct = parseFloat(document.getElementById('calc-pct').value) || 0;
   const vendas = parseFloat(document.getElementById('calc-vendas').value) || 0;
   const periodo = parseInt(document.getElementById('calc-periodo').value) || 30;
-
-  const comissaoUnit = preco * (pct / 100);
-  const total = comissaoUnit * vendas * periodo;
-
-  document.getElementById('calc-result-unit').textContent = `R$ ${comissaoUnit.toFixed(2).replace('.',',')}`;
+  const unit = preco * (pct / 100);
+  const total = unit * vendas * periodo;
+  document.getElementById('calc-result-unit').textContent = `R$ ${unit.toFixed(2).replace('.',',')}`;
   document.getElementById('calc-result-total').textContent = `R$ ${total.toFixed(2).replace('.',',')}`;
-
   const labels = { 1: 'por dia', 7: 'por semana', 30: 'por mês' };
   document.getElementById('calc-result-label').textContent = labels[periodo];
 }
@@ -1201,15 +1314,12 @@ function calcMeta() {
   const meta = parseFloat(document.getElementById('calc-meta').value) || 0;
   const preco = parseFloat(document.getElementById('calc-preco').value) || 189.90;
   const pct = parseFloat(document.getElementById('calc-pct').value) || 6;
-  const comissaoUnit = preco * (pct / 100);
-  const vendasNecessarias = comissaoUnit > 0 ? Math.ceil(meta / comissaoUnit) : 0;
-  document.getElementById('calc-meta-result').textContent = vendasNecessarias.toLocaleString('pt-BR');
+  const unit = preco * (pct / 100);
+  document.getElementById('calc-meta-result').textContent = unit > 0 ? Math.ceil(meta / unit).toLocaleString('pt-BR') : 0;
 }
 
 // ============ INIT ============
 renderTrending();
-renderVendidos();
-renderOfertas();
 </script>
 </body>
 </html>
