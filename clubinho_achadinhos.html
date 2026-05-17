@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clubinho dos Achadinhos — Central de Ofertas</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a3a;
+    --accent: #ff6b2b;
+    --accent2: #ff3d7f;
+    --accent3: #00d4aa;
+    --gold: #ffd166;
+    --text: #f0f0f8;
+    --muted: #7070a0;
+    --glow: rgba(255,107,43,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255,107,43,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255,61,127,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo span { color: var(--accent); }
+  .logo .dot { width: 8px; height: 8px; background: var(--accent3); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+
+  .badge-live {
+    background: rgba(0,212,170,0.15);
+    border: 1px solid rgba(0,212,170,0.4);
+    color: var(--accent3);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 1.5rem 2rem 0;
+    position: relative;
+    z-index: 1;
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border: 1px solid transparent;
+    border-bottom: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: transparent;
+  }
+
+  .tab.active {
+    background: var(--card);
+    color: var(--text);
+    border-color: var(--border);
+    border-bottom: 1px solid var(--card);
+  }
+
+  .tab:hover:not(.active) { color: var(--text); }
+
+  .tab .tab-icon { margin-right: 6px; }
+
+  /* MAIN */
+  main {
+    padding: 0 2rem 2rem;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .panel {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0 12px 12px 12px;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .panel.active { display: block; }
+
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(255,107,43,0.08);
+  }
+
+  /* GRID */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  /* PRODUCT CARD */
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .product-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(255,107,43,0.15);
+  }
+
+  .product-card .card-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .product-card .card-body { padding: 12px; }
+
+  .product-card .card-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-card .card-price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent3);
+  }
+
+  .product-card .card-old {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: line-through;
+    margin-right: 6px;
+  }
+
+  .product-card .card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .btn-usar {
+    flex: 1;
+    padding: 7px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s;
+  }
+
+  .btn-usar:hover { opacity: 0.85; }
+
+  /* BADGES */
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge-hot { background: var(--accent2); color: white; }
+  .badge-trend { background: var(--accent3); color: #0a0a0f; }
+  .badge-off { background: var(--gold); color: #0a0a0f; }
+
+  /* RANKING TABLE */
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .ranking-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .ranking-table td {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    vertical-align: middle;
+  }
+
+  .ranking-table tr:hover td { background: rgba(255,107,43,0.04); }
+
+  .rank-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--muted);
+    width: 40px;
+  }
+
+  .rank-num.top3 { color: var(--gold); }
+
+  .trend-bar {
+    width: 100px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .trend-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+
+  .trend-indicator {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .trend-up { background: rgba(0,212,170,0.15); color: var(--accent3); }
+  .trend-fire { background: rgba(255,61,127,0.15); color: var(--accent2); }
+  .trend-stable { background: rgba(112,112,160,0.15); color: var(--muted); }
+
+  /* GERADOR */
+  .gerador-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media(max-width: 768px) { .gerador-container { grid-template-columns: 1fr; } }
+
+  .gerador-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .form-textarea { resize: vertical; min-height: 80px; }
+  .form-select { cursor: pointer; }
+
+  option { background: var(--card); }
+
+  .style-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .style-option {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-align: center;
+    transition: all 0.2s;
+    background: var(--surface);
+  }
+
+  .style-option:hover, .style-option.active {
+    border-color: var(--accent);
+    background: rgba(255,107,43,0.08);
+    color: var(--accent);
+  }
+
+  .btn-gerar {
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-gerar:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-gerar:active { transform: translateY(0); }
+
+  .resultado-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .resultado-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    gap: 1rem;
+  }
+
+  .resultado-placeholder .icon { font-size: 3rem; opacity: 0.4; }
+
+  .resultado-text {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-copiar {
+    margin-top: 1rem;
+    padding: 10px;
+    background: rgba(0,212,170,0.15);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent3);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    display: none;
+  }
+
+  .btn-copiar:hover { background: rgba(0,212,170,0.25); }
+  .btn-copiar.visible { display: block; }
+
+  /* CALCULADORA */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .calc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .calc-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  .calc-result {
+    background: var(--card);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .calc-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent3);
+  }
+
+  .calc-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+  /* HISTORICO */
+  .historico-empty {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted);
+  }
+
+  .historico-empty .icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+
+  .historico-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    font-size: 0.85rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .historico-item .hi-emoji { font-size: 1.5rem; }
+
+  .historico-item .hi-info { flex: 1; }
+
+  .historico-item .hi-name { font-weight: 500; margin-bottom: 2px; }
+
+  .historico-item .hi-time { color: var(--muted); font-size: 0.75rem; }
+
+  .historico-item .hi-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255,107,43,0.15);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @media(max-width: 768px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+  /* LOADING */
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 2rem;
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ALERT POST AGORA */
+  .alert-post {
+    background: linear-gradient(135deg, rgba(255,107,43,0.15), rgba(255,61,127,0.1));
+    border: 1px solid rgba(255,107,43,0.4);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+  }
+
+  .alert-post .alert-icon { font-size: 1.5rem; }
+
+  .alert-post strong { color: var(--accent); font-family: 'Syne', sans-serif; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE TABS */
+  @media(max-width: 600px) {
+    .tabs { padding: 1rem 1rem 0; }
+    main { padding: 0 1rem 1rem; }
+    header { padding: 0 1rem; }
+    .panel { padding: 1.2rem; }
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="dot"></span>
+    Clubinho <span>Achadinhos</span>
+  </div>
+  <div class="header-right">
+    <span class="badge-live">● Ao vivo</span>
+  </div>
+</header>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" onclick="showTab('trending')"><span class="tab-icon">🔥</span>Trending Agora</div>
+  <div class="tab" onclick="showTab('vendidos')"><span class="tab-icon">📈</span>Mais Vendidos 30d</div>
+  <div class="tab" onclick="showTab('ofertas')"><span class="tab-icon">💸</span>Melhores Ofertas</div>
+  <div class="tab" onclick="showTab('gerador')"><span class="tab-icon">✍️</span>Gerar Postagem</div>
+  <div class="tab" onclick="showTab('calc')"><span class="tab-icon">💰</span>Calculadora</div>
+  <div class="tab" onclick="showTab('historico')"><span class="tab-icon">📋</span>Histórico</div>
+</div>
+
+<main>
+
+  <!-- ABA TRENDING -->
+  <div class="panel active" id="panel-trending">
+    <div class="alert-post">
+      <span class="alert-icon">🚨</span>
+      <div><strong>3 produtos em alta agora!</strong> Airfryer, Perfume importado e Fone Bluetooth estão explodindo nas buscas. Momento ideal pra postar!</div>
+    </div>
+
+    <div class="section-title">🔥 Trending Agora</div>
+    <div class="section-sub">Produtos mais buscados no Google nas últimas horas — atualizado em tempo real</div>
+
+    <div class="filters" id="filters-trending">
+      <button class="filter-btn active" onclick="filterTrending('todos',this)">Todos</button>
+      <button class="filter-btn" onclick="filterTrending('eletronicos',this)">Eletrônicos</button>
+      <button class="filter-btn" onclick="filterTrending('beleza',this)">Beleza</button>
+      <button class="filter-btn" onclick="filterTrending('casa',this)">Casa</button>
+      <button class="filter-btn" onclick="filterTrending('moda',this)">Moda</button>
+      <button class="filter-btn" onclick="filterTrending('esporte',this)">Esporte</button>
+    </div>
+
+    <div class="products-grid" id="grid-trending"></div>
+  </div>
+
+  <!-- ABA MAIS VENDIDOS -->
+  <div class="panel" id="panel-vendidos">
+    <div class="section-title">📈 Mais Vendidos — Últimos 30 dias</div>
+    <div class="section-sub">Ranking dos 100 produtos com maior volume de vendas no período</div>
+
+    <div class="filters" id="filters-vendidos">
+      <button class="filter-btn active" onclick="filterVendidos('todos',this)">Todos</button>
+      <button class="filter-btn" onclick="filterVendidos('amazon',this)">Amazon</button>
+      <button class="filter-btn" onclick="filterVendidos('shopee',this)">Shopee</button>
+      <button class="filter-btn" onclick="filterVendidos('magalu',this)">Magalu</button>
+    </div>
+
+    <table class="ranking-table" id="table-vendidos">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Produto</th>
+          <th>Loja</th>
+          <th>Preço</th>
+          <th>Tendência 30d</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-vendidos"></tbody>
+    </table>
+  </div>
+
+  <!-- ABA MELHORES OFERTAS -->
+  <div class="panel" id="panel-ofertas">
+    <div class="section-title">💸 Melhores Ofertas do Momento</div>
+    <div class="section-sub">Ordenado por maior desconto — produtos com badge 🔴 combinam alta busca + desconto</div>
+
+    <div class="filters">
+      <button class="filter-btn active">Maior Desconto</button>
+      <button class="filter-btn">Menor Preço</button>
+      <button class="filter-btn">Mais Relevante</button>
+    </div>
+
+    <div class="products-grid" id="grid-ofertas"></div>
+  </div>
+
+  <!-- ABA GERADOR -->
+  <div class="panel" id="panel-gerador">
+    <div class="section-title">✍️ Gerador de Postagem com IA</div>
+    <div class="section-sub">Cole o link de afiliado da Afilio e a IA cria o anúncio perfeito pro Telegram</div>
+
+    <div class="gerador-container">
+      <div class="gerador-form">
+        <div class="form-group">
+          <label>Nome do Produto</label>
+          <input class="form-input" id="g-nome" placeholder="Ex: Airfryer Mondial 4L 1500W">
+        </div>
+        <div class="form-group">
+          <label>Link de Afiliado (Afilio)</label>
+          <input class="form-input" id="g-link" placeholder="https://tracking.afilio.com.br/...">
+        </div>
+        <div class="form-group">
+          <label>Preço Atual</label>
+          <input class="form-input" id="g-preco" placeholder="R$ 189,90" type="text">
+        </div>
+        <div class="form-group">
+          <label>Preço Antigo (opcional)</label>
+          <input class="form-input" id="g-preco-old" placeholder="R$ 299,90" type="text">
+        </div>
+        <div class="form-group">
+          <label>Informações extras (opcional)</label>
+          <textarea class="form-textarea" id="g-extra" placeholder="Ex: frete grátis, parcelamento, quantidade limitada..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Estilo do Anúncio</label>
+          <div class="style-grid" id="style-grid">
+            <div class="style-option active" onclick="selectStyle(this,'urgencia')">🚨 Urgência</div>
+            <div class="style-option" onclick="selectStyle(this,'economia')">💰 Economia</div>
+            <div class="style-option" onclick="selectStyle(this,'desejo')">😍 Desejo</div>
+            <div class="style-option" onclick="selectStyle(this,'presente')">🎁 Presente</div>
+          </div>
+        </div>
+        <button class="btn-gerar" onclick="gerarPostagem()">✨ Gerar Postagem com IA</button>
+      </div>
+
+      <div class="resultado-box" id="resultado-box">
+        <div class="resultado-placeholder" id="resultado-placeholder">
+          <div class="icon">✍️</div>
+          <div>Preencha os campos e clique em <strong>Gerar Postagem</strong></div>
+        </div>
+        <div class="resultado-text" id="resultado-text" style="display:none"></div>
+        <button class="btn-copiar" id="btn-copiar" onclick="copiarPostagem()">📋 Copiar para Telegram</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA CALCULADORA -->
+  <div class="panel" id="panel-calc">
+    <div class="section-title">💰 Calculadora de Comissão</div>
+    <div class="section-sub">Simule seus ganhos por produto e volume de vendas</div>
+
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>Por Produto</h3>
+        <div class="form-group">
+          <label>Preço do produto (R$)</label>
+          <input class="form-input" id="calc-preco" type="number" placeholder="189.90" oninput="calcular()">
+        </div>
+        <div class="form-group" style="margin-top:0.8rem">
+          <label>Comissão da loja (%)</label>
+          <select class="form-select" id="calc-pct" onchange="calcular()">
+            <option value="3">Amazon — Eletrônicos (3%)</option>
+            <option value="6" selected>Amazon — Beleza (6%)</option>
+            <option value="8">Amazon — Casa (8%)</option>
+            <option value="7">Shopee (7%)</option>
+            <option value="5">Magalu (5%)</option>
+            <option value="8">Americanas (8%)</option>
+          </select>
+        </div>
+        <div class="calc-result">
+          <div class="calc-value" id="calc-result-unit">R$ 0,00</div>
+          <div class="calc-label">por venda</div>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <h3>Por Volume de Vendas</h3>
+        <div class="form-group">
+          <label>Vendas por dia estimadas</label>
+          <input class="form-input" id="calc-vendas" type="number" placeholder="10" oninput="calcular()">
+        </div>
+        <div class="form-group" style="margin-top:0.8rem">
+          <label>Período</label>
+          <select class="form-select" id="calc-periodo" onchange="calcular()">
+            <option value="1">Diário</option>
+            <option value="7">Semanal</option>
+            <option value="30" selected>Mensal</option>
+          </select>
+        </div>
+        <div class="calc-result">
+          <div class="calc-value" id="calc-result-total">R$ 0,00</div>
+          <div class="calc-label" id="calc-result-label">no período</div>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <h3>Meta de Renda</h3>
+        <div class="form-group">
+          <label>Quanto quer ganhar por mês (R$)</label>
+          <input class="form-input" id="calc-meta" type="number" placeholder="3000" oninput="calcMeta()">
+        </div>
+        <div class="calc-result" style="margin-top:1rem">
+          <div class="calc-value" id="calc-meta-result">0</div>
+          <div class="calc-label">vendas/mês necessárias</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA HISTÓRICO -->
+  <div class="panel" id="panel-historico">
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-hoje">0</div>
+        <div class="stat-label">Posts hoje</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-semana">0</div>
+        <div class="stat-label">Posts esta semana</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-mes">0</div>
+        <div class="stat-label">Posts este mês</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label">Total de posts</div>
+      </div>
+    </div>
+
+    <div class="section-title">📋 Histórico de Postagens</div>
+    <div class="section-sub">Tudo que você gerou — evite repetir produtos</div>
+
+    <div id="historico-list">
+      <div class="historico-empty">
+        <div class="icon">📭</div>
+        <div>Nenhuma postagem gerada ainda.<br>Use o Gerador de Postagem pra começar!</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ============ DADOS SIMULADOS ============
+
+const produtosTrending = [
+  { nome: "Airfryer Mondial 4L 1500W", emoji: "🍟", preco: "R$ 189,90", precoOld: "R$ 299,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "casa", score: 95 },
+  { nome: "Fone Bluetooth JBL Tune 510BT", emoji: "🎧", preco: "R$ 179,00", precoOld: "R$ 259,00", badge: "hot", badgeLabel: "🔴 Explodindo", cat: "eletronicos", score: 91 },
+  { nome: "Perfume Importado 212 Men", emoji: "🌸", preco: "R$ 219,00", precoOld: "R$ 380,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "beleza", score: 88 },
+  { nome: "Tênis Nike Air Max Excee", emoji: "👟", preco: "R$ 349,99", precoOld: "R$ 499,99", badge: "hot", badgeLabel: "🔴 Explodindo", cat: "moda", score: 85 },
+  { nome: "Smartwatch Samsung Galaxy Watch 6", emoji: "⌚", preco: "R$ 899,00", precoOld: "R$ 1.299,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "eletronicos", score: 82 },
+  { nome: "Kit Skincare Vitamina C Neutrogena", emoji: "✨", preco: "R$ 89,90", precoOld: "R$ 139,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "beleza", score: 80 },
+  { nome: "Aspirador Robô Multilaser Titan", emoji: "🤖", preco: "R$ 699,00", precoOld: "R$ 999,00", badge: "trend", badgeLabel: "📈 Subindo", cat: "casa", score: 77 },
+  { nome: "Whey Protein Integral Médica 1kg", emoji: "💪", preco: "R$ 129,90", precoOld: "R$ 199,90", badge: "hot", badgeLabel: "🔴 Em alta", cat: "esporte", score: 75 },
+  { nome: "Mochila Antifurto USB 30L", emoji: "🎒", preco: "R$ 89,00", precoOld: "R$ 149,00", badge: null, badgeLabel: null, cat: "moda", score: 70 },
+  { nome: "Câmera de Segurança Intelbras WiFi", emoji: "📷", preco: "R$ 169,90", precoOld: "R$ 249,90", badge: "trend", badgeLabel: "📈 Subindo", cat: "eletronicos", score: 68 },
+  { nome: "Chaleira Elétrica Philco 1.7L", emoji: "☕", preco: "R$ 79,90", precoOld: "R$ 119,90", badge: null, badgeLabel: null, cat: "casa", score: 65 },
+  { nome: "Protetor Solar FPS 70 La Roche", emoji: "🌞", preco: "R$ 69,90", precoOld: "R$ 99,90", badge: "fire", badgeLabel: "🔥 Explodindo", cat: "beleza", score: 63 },
+];
+
+const produtosVendidos = [
+  { nome: "Airfryer Philco 4.2L Digital", loja: "Amazon", preco: "R$ 219,90", trend: 92, status: "fire" },
+  { nome: "iPhone 15 128GB", loja: "Amazon", preco: "R$ 4.299,00", trend: 88, status: "fire" },
+  { nome: "Notebook Lenovo IdeaPad i5", loja: "Magalu", preco: "R$ 2.499,00", trend: 85, status: "up" },
+  { nome: "Fone JBL Tune 510BT", loja: "Shopee", preco: "R$ 179,00", trend: 82, status: "fire" },
+  { nome: "Kit Maquiagem Luisance", loja: "Shopee", preco: "R$ 49,90", trend: 78, status: "up" },
+  { nome: "Tênis Olympikus Running", loja: "Amazon", preco: "R$ 199,90", trend: 75, status: "up" },
+  { nome: "Panela de Pressão Elétrica Mondial", loja: "Magalu", preco: "R$ 299,00", trend: 71, status: "stable" },
+  { nome: "Whey Protein Max Titanium 1kg", loja: "Amazon", preco: "R$ 149,90", trend: 68, status: "up" },
+  { nome: "Smart TV LG 50\" 4K", loja: "Magalu", preco: "R$ 1.899,00", trend: 65, status: "stable" },
+  { nome: "Cadeira Gamer ThunderX3", loja: "Amazon", preco: "R$ 1.199,00", trend: 62, status: "up" },
+  { nome: "Vitamina C 1000mg Vitafor", loja: "Shopee", preco: "R$ 34,90", trend: 60, status: "up" },
+  { nome: "Aspirador Vertical Electrolux", loja: "Magalu", preco: "R$ 449,00", trend: 58, status: "stable" },
+  { nome: "Perfume 212 NYC Men 100ml", loja: "Amazon", preco: "R$ 219,00", trend: 55, status: "up" },
+  { nome: "Mouse Gamer Logitech G203", loja: "Amazon", preco: "R$ 179,00", trend: 53, status: "stable" },
+  { nome: "Câmera Instax Mini 12 Fujifilm", loja: "Shopee", preco: "R$ 399,00", trend: 50, status: "stable" },
+];
+
+const produtosOfertas = [
+  { nome: "Fritadeira Air Fryer Mondial Digital 4L", emoji: "🍟", preco: "R$ 159,90", precoOld: "R$ 299,90", desconto: 47, postNow: true },
+  { nome: "Smartwatch Xiaomi Redmi Watch 3", emoji: "⌚", preco: "R$ 299,00", precoOld: "R$ 549,00", desconto: 45, postNow: true },
+  { nome: "Fone Sony WH-1000XM4 Noise Cancel", emoji: "🎧", preco: "R$ 1.099,00", precoOld: "R$ 1.999,00", desconto: 45, postNow: false },
+  { nome: "Kit Perfume Importado 212 + Body", emoji: "🌸", preco: "R$ 219,00", precoOld: "R$ 399,00", desconto: 45, postNow: true },
+  { nome: "Tênis Nike Air Force 1 '07", emoji: "👟", preco: "R$ 379,00", precoOld: "R$ 649,00", desconto: 42, postNow: false },
+  { nome: "Notebook Acer Aspire i5 8GB", emoji: "💻", preco: "R$ 2.199,00", precoOld: "R$ 3.699,00", desconto: 41, postNow: false },
+  { nome: "Câmera Canon EOS Rebel SL3", emoji: "📷", preco: "R$ 3.499,00", precoOld: "R$ 5.799,00", desconto: 40, postNow: false },
+  { nome: "Protetor Solar Anasol FPS 70 150g", emoji: "☀️", preco: "R$ 32,90", precoOld: "R$ 54,90", desconto: 40, postNow: false },
+];
+
+let historicoList = [];
+let estiloSelecionado = 'urgencia';
+
+// ============ TABS ============
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const tabs = ['trending','vendidos','ofertas','gerador','calc','historico'];
+    t.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ============ RENDER TRENDING ============
+function renderTrending(filter = 'todos') {
+  const grid = document.getElementById('grid-trending');
+  const filtered = filter === 'todos' ? produtosTrending : produtosTrending.filter(p => p.cat === filter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      ${p.badge ? `<span class="badge badge-${p.badge === 'fire' ? 'hot' : p.badge === 'trend' ? 'trend' : 'off'}">${p.badgeLabel}</span>` : ''}
+      <div class="card-img">${p.emoji}</div>
+      <div class="card-body">
+        <div class="card-name">${p.nome}</div>
+        <div>
+          <span class="card-old">${p.precoOld}</span>
+          <span class="card-price">${p.preco}</span>
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:6px">
+          <div class="trend-bar"><div class="trend-bar-fill" style="width:${p.score}%"></div></div>
+          <span style="font-size:0.72rem;color:var(--muted)">${p.score}</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn-usar" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','${p.precoOld}')">Usar este ➜</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterTrending(cat, btn) {
+  document.querySelectorAll('#filters-trending .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTrending(cat);
+}
+
+// ============ RENDER VENDIDOS ============
+function renderVendidos(filter = 'todos') {
+  const tbody = document.getElementById('tbody-vendidos');
+  const filtered = filter === 'todos' ? produtosVendidos : produtosVendidos.filter(p => p.loja.toLowerCase() === filter);
+  tbody.innerHTML = filtered.map((p, i) => `
+    <tr>
+      <td class="rank-num ${i < 3 ? 'top3' : ''}">${i < 3 ? ['🥇','🥈','🥉'][i] : i+1}</td>
+      <td style="max-width:200px">${p.nome}</td>
+      <td><span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:var(--border);color:var(--muted)">${p.loja}</span></td>
+      <td style="font-weight:600;color:var(--accent3)">${p.preco}</td>
+      <td>
+        <div class="trend-bar"><div class="trend-bar-fill" style="width:${p.trend}%"></div></div>
+      </td>
+      <td>
+        <span class="trend-indicator ${p.status === 'fire' ? 'trend-fire' : p.status === 'up' ? 'trend-up' : 'trend-stable'}">
+          ${p.status === 'fire' ? '🔥 Explodindo' : p.status === 'up' ? '📈 Subindo' : '➡️ Estável'}
+        </span>
+      </td>
+      <td><button class="btn-usar" style="width:80px" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','')">Usar ➜</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterVendidos(loja, btn) {
+  document.querySelectorAll('#filters-vendidos .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVendidos(loja);
+}
+
+// ============ RENDER OFERTAS ============
+function renderOfertas() {
+  const grid = document.getElementById('grid-ofertas');
+  grid.innerHTML = produtosOfertas.map(p => `
+    <div class="product-card">
+      <span class="badge badge-off">-${p.desconto}%</span>
+      ${p.postNow ? '<span style="position:absolute;top:10px;right:10px;background:var(--accent2);color:white;font-size:0.65rem;padding:2px 6px;border-radius:4px;font-weight:700">POST AGORA</span>' : ''}
+      <div class="card-img">${p.emoji}</div>
+      <div class="card-body">
+        <div class="card-name">${p.nome}</div>
+        <div>
+          <span class="card-old">${p.precoOld}</span>
+          <span class="card-price">${p.preco}</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn-usar" onclick="usarProduto('${p.nome.replace(/'/g,"\\'")}','${p.preco}','${p.precoOld}')">Usar este ➜</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============ USAR PRODUTO ============
+function usarProduto(nome, preco, precoOld) {
+  showTab('gerador');
+  setTimeout(() => {
+    document.getElementById('g-nome').value = nome;
+    document.getElementById('g-preco').value = preco;
+    document.getElementById('g-preco-old').value = precoOld;
+  }, 100);
+}
+
+// ============ ESTILO ============
+function selectStyle(el, style) {
+  document.querySelectorAll('.style-option').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  estiloSelecionado = style;
+}
+
+// ============ GERAR POSTAGEM ============
+async function gerarPostagem() {
+  const nome = document.getElementById('g-nome').value.trim();
+  const link = document.getElementById('g-link').value.trim();
+  const preco = document.getElementById('g-preco').value.trim();
+  const precoOld = document.getElementById('g-preco-old').value.trim();
+  const extra = document.getElementById('g-extra').value.trim();
+
+  if (!nome || !preco) {
+    alert('Preencha pelo menos o nome do produto e o preço atual!');
+    return;
+  }
+
+  const placeholder = document.getElementById('resultado-placeholder');
+  const resultText = document.getElementById('resultado-text');
+  const btnCopiar = document.getElementById('btn-copiar');
+
+  placeholder.style.display = 'none';
+  resultText.style.display = 'block';
+  resultText.innerHTML = '<div class="loading"><div class="spinner"></div> IA gerando seu anúncio...</div>';
+  btnCopiar.classList.remove('visible');
+
+  const estilos = {
+    urgencia: "Crie um anúncio URGENTE com gatilhos de escassez e urgência. Use frases como 'estoque limitado', 'só hoje', 'acabando'. Tom acelerado e impactante.",
+    economia: "Foque na ECONOMIA e no quanto a pessoa vai ECONOMIZAR. Destaque o valor economizado em reais. Tom racional e objetivo.",
+    desejo: "Foque nos BENEFÍCIOS e no quanto o produto vai melhorar a vida da pessoa. Tom aspiracional e emotivo. Faça a pessoa querer muito o produto.",
+    presente: "Foque na ideia de PRESENTE perfeito para alguém especial. Tom caloroso e afetivo. Ideal para datas comemorativas."
+  };
+
+  const descontoCalc = precoOld ? Math.round((1 - parseFloat(preco.replace('R$','').replace(',','.').trim()) / parseFloat(precoOld.replace('R$','').replace(',','.').trim())) * 100) : null;
+
+  const prompt = `Você é um especialista em marketing digital e copywriting para grupos de achadinhos no Telegram brasileiro.
+
+Crie uma postagem de oferta EXTREMAMENTE persuasiva e irresistível para o Telegram com as informações abaixo.
+
+Produto: ${nome}
+Preço atual: ${preco}
+${precoOld ? `Preço antigo: ${precoOld}` : ''}
+${descontoCalc ? `Desconto: ${descontoCalc}%` : ''}
+${link ? `Link: ${link}` : 'Link: [LINK DO AFILIADO]'}
+${extra ? `Informações extras: ${extra}` : ''}
+
+Estilo: ${estilos[estiloSelecionado]}
+
+REGRAS OBRIGATÓRIAS:
+- Use emojis estrategicamente (não exagere)
+- Formato perfeito para Telegram
+- Inclua o link no final com um CTA forte
+- Máximo 15 linhas
+- Em português brasileiro natural e informal
+- NÃO use hashtags
+- Termine com o link entre colchetes como [🛒 GARANTIR OFERTA](${link || 'LINK_AFILIADO'})
+
+Retorne APENAS o texto da postagem, sem explicações.`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const texto = data.content?.map(c => c.text || '').join('') || '';
+
+    resultText.innerHTML = '';
+    resultText.style.whiteSpace = 'pre-wrap';
+    resultText.textContent = texto;
+    btnCopiar.classList.add('visible');
+
+    // Salva no histórico
+    salvarHistorico(nome, preco, texto);
+
+  } catch (e) {
+    resultText.textContent = gerarPostLocal(nome, preco, precoOld, link, estiloSelecionado, descontoCalc, extra);
+    btnCopiar.classList.add('visible');
+    salvarHistorico(nome, preco, resultText.textContent);
+  }
+}
+
+function gerarPostLocal(nome, preco, precoOld, link, estilo, desconto, extra) {
+  const linkFinal = link || '[COLE SEU LINK AFILIADO AQUI]';
+  const economiaVal = precoOld && preco ?
+    `R$ ${(parseFloat(precoOld.replace('R$','').replace(',','.').trim()) - parseFloat(preco.replace('R$','').replace(',','.').trim())).toFixed(2).replace('.',',')}` : null;
+
+  const templates = {
+    urgencia: `🚨 OFERTA RELÂMPAGO — ACABANDO! 🚨\n\n🎯 ${nome}\n\n${precoOld ? `❌ De: ${precoOld}\n` : ''}✅ Por: ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n⚠️ Estoque LIMITADO — última vez que apareceu nesse preço esgotou em horas!\n\n${extra ? `📌 ${extra}\n\n` : ''}⏰ Não perca essa chance!\n\n[🛒 GARANTIR ANTES QUE ACABE](${linkFinal})`,
+    economia: `💰 ECONOMIA REAL DE VERDADE!\n\n🛍️ ${nome}\n\n${precoOld ? `Preço normal: ${precoOld}\n` : ''}💥 Hoje por apenas: ${preco}${desconto ? `\n\nVocê ECONOMIZA ${economiaVal || desconto+'%'} nessa compra!` : ''}\n\n${extra ? `✅ ${extra}\n\n` : ''}Isso é economia que faz diferença no seu bolso 💪\n\n[💰 COMPRAR COM DESCONTO](${linkFinal})`,
+    desejo: `😍 Olha essa BELEZA de oferta!\n\n✨ ${nome}\n\nEsse produto vai transformar sua rotina! Imagina ter isso em casa...\n\n${precoOld ? `De ${precoOld} ` : ''}por apenas ${preco}${desconto ? ` — ${desconto}% mais barato!` : ''}\n\n${extra ? `🌟 ${extra}\n\n` : ''}Você merece! Não se arrependa de não aproveitar 🥰\n\n[😍 QUERO ESSE AGORA](${linkFinal})`,
+    presente: `🎁 O PRESENTE PERFEITO está aqui!\n\n💝 ${nome}\n\nQue tal surpreender alguém especial? Esse produto é incrível!\n\n${precoOld ? `De ${precoOld} ` : ''}por ${preco}${desconto ? ` (${desconto}% OFF)` : ''}\n\n${extra ? `🎀 ${extra}\n\n` : ''}Perfeito para qualquer ocasião especial ❤️\n\n[🎁 GARANTIR O PRESENTE](${linkFinal})`
+  };
+
+  return templates[estilo] || templates.urgencia;
+}
+
+// ============ COPIAR ============
+function copiarPostagem() {
+  const texto = document.getElementById('resultado-text').textContent;
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.getElementById('btn-copiar');
+    btn.textContent = '✅ Copiado!';
+    setTimeout(() => btn.textContent = '📋 Copiar para Telegram', 2000);
+  });
+}
+
+// ============ HISTÓRICO ============
+function salvarHistorico(nome, preco, texto) {
+  const emojis = ['🛍️','🔥','💥','🎯','⚡','🚀','💎','🎁'];
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+  historicoList.unshift({ nome, preco, emoji, time: timeStr, texto });
+  renderHistorico();
+  updateStats();
+}
+
+function renderHistorico() {
+  const list = document.getElementById('historico-list');
+  if (historicoList.length === 0) {
+    list.innerHTML = '<div class="historico-empty"><div class="icon">📭</div><div>Nenhuma postagem gerada ainda.<br>Use o Gerador de Postagem pra começar!</div></div>';
+    return;
+  }
+  list.innerHTML = historicoList.map((h, i) => `
+    <div class="historico-item">
+      <div class="hi-emoji">${h.emoji}</div>
+      <div class="hi-info">
+        <div class="hi-name">${h.nome}</div>
+        <div class="hi-time">${h.preco} · ${h.time}</div>
+      </div>
+      <span class="hi-badge">Gerado</span>
+    </div>
+  `).join('');
+}
+
+function updateStats() {
+  const total = historicoList.length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-hoje').textContent = total;
+  document.getElementById('stat-semana').textContent = total;
+  document.getElementById('stat-mes').textContent = total;
+}
+
+// ============ CALCULADORA ============
+function calcular() {
+  const preco = parseFloat(document.getElementById('calc-preco').value) || 0;
+  const pct = parseFloat(document.getElementById('calc-pct').value) || 0;
+  const vendas = parseFloat(document.getElementById('calc-vendas').value) || 0;
+  const periodo = parseInt(document.getElementById('calc-periodo').value) || 30;
+
+  const comissaoUnit = preco * (pct / 100);
+  const total = comissaoUnit * vendas * periodo;
+
+  document.getElementById('calc-result-unit').textContent = `R$ ${comissaoUnit.toFixed(2).replace('.',',')}`;
+  document.getElementById('calc-result-total').textContent = `R$ ${total.toFixed(2).replace('.',',')}`;
+
+  const labels = { 1: 'por dia', 7: 'por semana', 30: 'por mês' };
+  document.getElementById('calc-result-label').textContent = labels[periodo];
+}
+
+function calcMeta() {
+  const meta = parseFloat(document.getElementById('calc-meta').value) || 0;
+  const preco = parseFloat(document.getElementById('calc-preco').value) || 189.90;
+  const pct = parseFloat(document.getElementById('calc-pct').value) || 6;
+  const comissaoUnit = preco * (pct / 100);
+  const vendasNecessarias = comissaoUnit > 0 ? Math.ceil(meta / comissaoUnit) : 0;
+  document.getElementById('calc-meta-result').textContent = vendasNecessarias.toLocaleString('pt-BR');
+}
+
+// ============ INIT ============
+renderTrending();
+renderVendidos();
+renderOfertas();
+</script>
+</body>
+</html>
